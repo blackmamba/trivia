@@ -145,11 +145,12 @@
             child = function() {
                 parent.apply(this, arguments);
             };
+            
             _.extend(child, parent, { NAME: nam, parent: parent.prototype });
 
             Ctor = function () {};
             Ctor.prototype = parent.prototype;
-
+ 
             child.prototype = new Ctor();
             child.prototype._initList = Array.prototype.slice.call(child.prototype._initList);
             _.extend(child.prototype, protoProps, { constructor: child });
@@ -424,7 +425,7 @@
 
             mixinOptions = FW.Component.parent.init.call(this, options);
 
-            this._$el = $('<div></div>');
+            this._$el = options.el || $('<div></div>');
             this._template = options.template || 'No template available!';
             this._components = new FW.ComponentList();
             this._delegates = [];

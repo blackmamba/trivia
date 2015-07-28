@@ -1,24 +1,81 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <title>Example</title>
+    <title>Product Catalog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 </head>
+
 <body>
-
-<style>
+    <style>
     .component {
-        margin: 25px;
-        border: 1px solid black;
+        margin: 25px 0;
+        /*border: 1px solid black;*/
     }
-    .hookLevel2 {
-        background-color: lightgreen;
+    
+    .hookLevel1 {
+		list-style: none;
+
     }
-</style>
 
-<script src="http://code.jquery.com/jquery-2.1.0.js"></script>
-<script src="http://underscorejs.org/underscore.js"></script>
-<script src="framework.js"></script>
-<script src="example.js"></script>
+    .hookLevel1 li {
+    	border-bottom: 1px solid #ccc;
+    	padding: 5px;
+    	position: relative;
+    }
 
+    .hookLevel1 li:hover {
+    	background-color: #fbf9ea;
+    	cursor: pointer;
+    }
+
+    .glyphicon.glyphicon-plus {
+        color: blue;
+    }
+
+    li span.glyphicon.glyphicon-trash {
+		position: absolute;
+		top: 10px;
+		right:10px;
+    }
+    
+    /*.hookLevel2 {*/
+    /*    background-color: lightgreen;
+    }*/
+    </style>
+    <template id="addItem">
+        <h1>Add Item</h1>
+        <form>
+            <div class="form-group item">
+                <input type="text" name="name" placeholder="name" >
+                <input type="text" name="detail" placeholder="detail">
+                <input type="number" name="price" placeholder="price">
+                <input type="number" name="quantity" placeholder="quantity">
+            </div>
+            <button type="button" class="save btn btn-default">Save</button>
+        </form>
+    </template>
+    <div class="container-fluid">
+        <div class="dynamic">
+        </div>
+        <div class="const">
+            <h1>Product Catalog
+	        <button type="button" class="btn btn-default btn-lg addItem pull-right" aria-label="Left Align">
+	            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	        </button>
+        </h1>
+            <div class="product-list"></div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="framework.js"></script>
+    <script src="example.js"></script>
 </body>
+
 </html>

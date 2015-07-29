@@ -57,7 +57,7 @@
         remove: function(ele) {
             if (typeof ele === 'object')
                 _.each(this.models, function(element, index, list) {
-                    if (element.name === ele.name) {
+                    if (element.id === +ele.id) {
                         //element exists
                         this.models.splice(index, 1);
                         this.trigger('collection:remove', element);
@@ -79,9 +79,39 @@
                 options.template = '<ul class="hookLevel1"></ul>';
                 RootComponent.parent.init.call(this, options);
                 this.listenTo(this, 'load', this._onLoad);
+                // this.listenTo(this, 'render', this.attachEvents);
                 $('.addItem').on('click', this.addItem.bind(this));
+                $('.product-list').on('click', 'li', this.showDetailView.bind(this));
+
                 this.listenTo(this.collection, 'collection:add', this.updateUI);
+                $('.product-list').on('click', 'span.delete', this.removeItem.bind(this));
                 // this.listenTo(collection, 'remove', this.updateUI)
+            },
+            removeItem: function(e) {
+                e.stopPropagation();
+                var tar = e.target;
+                tar = $(tar).parents('li');
+                var id = +tar.find('span[name="id"]').text();
+                if (id) {
+                    this.collection.remove({'id': +id});
+                }
+                tar.remove();
+            },
+
+            showDetailView: function(e) {
+                var tar = e.target;
+                var item = $(tar);
+                var data = {
+                    id: item.find('span[name="id"]').text(),
+                    name: item.find('span[name="name"]').text(),
+                    detail: item.find('span[name="detail"]').text(),
+                    price: +item.find('span[name="price"]').text(),
+                    quantity: +item.find('span[name="quantity"]').text()
+                };
+
+                var tpl = _.template($('#editView').html());
+                $('.dynamic').html(tpl(data)).show();
+                $('.const').hide();
             },
 
             _onLoad: function() {
@@ -95,6 +125,7 @@
                         quantity: element.quantity
                     }), '.hookLevel1');
                 });
+
                 console.log("onload called");
 
             },
@@ -140,7 +171,7 @@
             },
 
             delete: function(e) {
-                
+
                 this.collection.remove({
                     name: item.find('input[name="name"]').val(),
                 });
@@ -155,11 +186,16 @@
         Component = FW.Component.extend('Component', {
             init: function(options) {
                 options.el = $('<li></li>');
-                options.template = '<div class="component">' + '<label>id: </label>' + options.id+ '<br/>' + options.name + '<br/>' + options.detail + '<br/>' + options.price + '<br/>' + options.quantity + '<span class="glyphicon glyphicon-trash delete" aria-hidden="true"></span></div>';
+                options.template = '<div class="component">' + '<label>id: </label><span name="id">' + options.id + '</span><br/><label>name: </label><span name="name">' + options.name + '</span><br/><label>detail: </label><span name="detail">' + options.detail + '</span><br/><label>price: </label><span name="price">' + options.price + '</span><br/><label>quantity: </label><span name="quantity">' + options.quantity + '</span><span class="glyphicon glyphicon-trash delete" aria-hidden="true"></span></div>';
                 Component.parent.init.call(this, options);
                 this.text = options.text;
+                
                 // this.listenTo(this, 'load', this._onLoad);
-            }
+            },
+
+
+
+
 
         });
 

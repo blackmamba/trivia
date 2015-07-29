@@ -55,7 +55,7 @@
         },
 
         remove: function(ele) {
-            if (typeof ele === 'object')
+            if (typeof ele === 'object') {
                 _.each(this.models, function(element, index, list) {
                     if (element.id === +ele.id) {
                         //element exists
@@ -64,8 +64,28 @@
                     }
 
                 }, this);
+            }
 
+        },
 
+        update: function(ele) {
+            if (typeof ele === 'object') {
+                _.each(this.models, function(element, index, list) {
+                    if (element.id === +ele.id) {
+                        //element exists
+                        // element.id = ele.id
+                        element.name = ele.name;
+                        element.detail = ele.detail;
+                        element.quantity = ele.quantity;
+                        element.price = ele.price;
+                        this.trigger('collection:update', element);
+
+                        return true;
+                    }
+
+                }, this);
+            }
+            return false;
         }
 
     });
@@ -75,7 +95,6 @@
             init: function(options) {
                 // options.el = $('<li></li>');
                 this.collection = new Collection(data);
-
                 options.template = '<ul class="hookLevel1"></ul>';
                 RootComponent.parent.init.call(this, options);
                 this.listenTo(this, 'load', this._onLoad);
@@ -84,6 +103,7 @@
                 $('.product-list').on('click', 'li', this.showDetailView.bind(this));
 
                 this.listenTo(this.collection, 'collection:add', this.updateUI);
+                this.listenTo(this.collection, 'collection:update', $.proxy(this, 'updateUI', 'update'));
                 $('.product-list').on('click', 'span.delete', this.removeItem.bind(this));
                 // this.listenTo(collection, 'remove', this.updateUI)
             },
@@ -93,13 +113,16 @@
                 tar = $(tar).parents('li');
                 var id = +tar.find('span[name="id"]').text();
                 if (id) {
-                    this.collection.remove({'id': +id});
+                    this.collection.remove({
+                        'id': +id
+                    });
                 }
                 tar.remove();
             },
 
             showDetailView: function(e) {
                 var tar = e.target;
+                var that = this;
                 var item = $(tar);
                 var data = {
                     id: item.find('span[name="id"]').text(),
@@ -112,12 +135,30 @@
                 var tpl = _.template($('#editView').html());
                 $('.dynamic').html(tpl(data)).show();
                 $('.const').hide();
+                $('.edit-save').on('click', function() {
+                    var tar = $('.edit');
+                    that.collection.update({
+                        id: tar.find('#id').val(),
+                        name: tar.find('#name').val(),
+                        detail: tar.find('#detail').val(),
+                        quantity: tar.find('#quantity').val(),
+                        price: tar.find('#price').val()
+                    })
+                    $('.const').show();
+                    $('.dynamic').hide();
+                });
+
+                $('.edit-cancel').on('click', function() {
+                    $('.const').show();
+                    $('.dynamic').hide();
+                });
+                // history.pushState({}, "detail", "detail");
             },
 
             _onLoad: function() {
                 var that = this;
                 _.each(this.collection.models, function(element, index, list) {
-                    that.components().append('component' + index, new Component({
+                    that.components().append(index, new Component({
                         id: element.id,
                         name: element.name,
                         detail: element.detail,
@@ -131,13 +172,20 @@
             },
 
             updateUI: function(element) {
-                this.components().append('component' + this.collection.models.length, new Component({
-                    id: element.id,
-                    name: element.name,
-                    detail: element.detail,
-                    price: element.price,
-                    quantity: element.quantity
-                }), '.hookLevel1');
+                if (typeof element === 'string' && element === 'update') {
+                    this.components().getComponent(arguments[1].id).removeFromDom();
+                    this.components().append(arguments[1].id, new Component(arguments[1]), '.hookLevel1');
+                } else {
+                    this.components().append(this.collection.models.length, new Component({
+                        id: element.id,
+                        name: element.name,
+                        detail: element.detail,
+                        price: element.price,
+                        quantity: element.quantity
+                    }), '.hookLevel1');
+
+
+                }
 
             },
 
@@ -186,17 +234,13 @@
         Component = FW.Component.extend('Component', {
             init: function(options) {
                 options.el = $('<li></li>');
+                // options.template = _.template('<div class="component"><label>id: </label><span name="id"><%=id%></span><br/><label>name: </label><span name="name"><%=name%></span><br/><label>detail: </label><span name="detail"><%=detail%></span><br/><label>price: </label><span name="price"><%=price%></span><br/><label>quantity: </label><span name="quantity"><%=quantity%></span><span class="glyphicon glyphicon-trash delete" aria-hidden="true"></span></div>');
                 options.template = '<div class="component">' + '<label>id: </label><span name="id">' + options.id + '</span><br/><label>name: </label><span name="name">' + options.name + '</span><br/><label>detail: </label><span name="detail">' + options.detail + '</span><br/><label>price: </label><span name="price">' + options.price + '</span><br/><label>quantity: </label><span name="quantity">' + options.quantity + '</span><span class="glyphicon glyphicon-trash delete" aria-hidden="true"></span></div>';
                 Component.parent.init.call(this, options);
                 this.text = options.text;
-                
+
                 // this.listenTo(this, 'load', this._onLoad);
-            },
-
-
-
-
-
+            }
         });
 
     createRootView();

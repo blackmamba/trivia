@@ -23,6 +23,7 @@ var RoboArm = function (num, input) {
   this.curPos = {};
 //  debugger;
   for (var i =0; i < num; i++) {
+
     this.map [i] = [i];
     this.curPos[i] = i;
   }
@@ -35,8 +36,9 @@ var RoboArm = function (num, input) {
       break;
     }
     var ex =  this.inputmap[i].split(' ');
-    var a = ex[1]; b = ex[3];
-    this.move(a, b);
+    var a = +ex[1]; b = +ex[3];
+    this.move(+a, +b);
+    // this.printMap();
   }
 }
 
@@ -51,11 +53,10 @@ RoboArm.prototype = {
   
     //get position of a 
     
-    if(this.clearBlock(a) && this.clearBlock(b)) {
+    if(this.clearBlock(a) /*&& this.clearBlock(b)*/) {
       var posa = this.curPos[a];
       var posb = this.curPos[b];
       this.map[posb].push(a);
-      this.map[posa].length = this.map[posa].length -1;
       this.curPos[a] = posb;
     }
     
@@ -82,17 +83,15 @@ RoboArm.prototype = {
     var len = arr.length;
     if (len === 1) {
       //position is already cleared;
+      arr.pop();
       return true;
-    } else {
+    } else if (len > 1) {
       var ind = arr.indexOf(a);
-      if (ind = len -1) {
-        //last element, easy case
-        var temp = arr.pop();
-        //cleared
-        return true;
-      } else {
+      if (ind < len -1) {
+        //not the last element
+       
         var item;
-        for (var i = len-1 ; i > ind; i++) {
+        for (var i = len-1 ; i > ind; i--) {
           //run a loop from the last element to one index gerater than the index of block to be cleared
           //also update the position in the curPos map
           item = arr.pop();
@@ -100,9 +99,12 @@ RoboArm.prototype = {
           this.curPos[item] = item;
         }//end of for
         //shortened the array
-        arr.length = ind -1;
-        return true;
+        
       }
+      //for the case where the index is last data element and once we clear all the elements above the desired
+      //data element we just have to pop our desired element and return 
+      arr.pop();
+      return true;
     }
     
   },

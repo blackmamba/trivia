@@ -116,8 +116,9 @@
                     this.collection.remove({
                         'id': +id
                     });
+                    tar.remove();
+
                 }
-                tar.remove();
             },
 
             showDetailView: function(e) {

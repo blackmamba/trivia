@@ -14,7 +14,7 @@
  */
 
 var num = 8;
-var input = "move 7 onto 1 \nmove 5 onto 1 \nmove 1 onto 6 \nmove 4 onto 3 \nmove 1 onto 4 \nmove 3 onto 1 \nmove 5 onto 2 \nmove 4 onto 5 \nquit"
+var input = "move 7 onto 1 \nmove 5 onto 1 \nmove 1 onto 6 \nmove 4 onto 3 \nmove 1 onto 4 \nmove 3 onto 1 \nmove 5 onto 2 \nmove 4 onto 5 \nquit";
 
 
 var RoboArm = function (num, input) {

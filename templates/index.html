@@ -14,45 +14,59 @@
 </head>
 
 <body>
-    <template id="post">
-    </template>
-    <div class="container">
-        <div class="header">
-            <ul class="nav nav-pills pull-right">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">blah</a></li>
-                <li><a href="#">Profile</a></li>
-            </ul>
-            <h3 class="text-muted">Title</h3>
+    <template id="item">
+        <div class="item">
+            <h3> <%-heading %> </h3>
+            <p>
+                <%- description %>
+            </p>
         </div>
-        <!-- <div class="jumbotron">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Always a pleasure scaffolding your apps.</p>
-        <p><a class="btn btn-lg btn-success" href="#">Splendid! <span class="glyphicon glyphicon-ok"></span></a></p>
-      </div> -->
-        <div class="row marketing">
-            <div class="col-lg-6">
-                <h4><a href="https://html5boilerplate.com/">HTML5 Boilerplate</a></h4>
-                <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-                <h4><a href="http://libsass.org/">Sass</a></h4>
-                <p>Sass is a mature, stable, and powerful professional grade CSS extension language.</p>
-                <h4><a href="http://getbootstrap.com/">Bootstrap</a></h4>
-                <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-                <h4><a href="http://modernizr.com/">Modernizr</a></h4>
-                <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
+        </temlate>
+        <div class="container">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">blah</a></li>
+                    <li><a href="#">Profile</a></li>
+                </ul>
+                <h3 class="text-muted">Title</h3>
+            </div>
+            <div class="container">
+                <div class="header">
+                    <ul class="nav nav-pills pull-right">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <h3 class="text-muted">scaffold</h3>
+                </div>
+                <div class="items">
+                    <div class="item">
+                        <h3>'Allo, 'Allo!</h3>
+                        <p>Always a pleasure scaffolding your apps.</p>
+                    </div>
+                </div>
+                <div class="footer">
+                    <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+                </div>
             </div>
         </div>
-        <div class="footer">
-            <p><span class="glyphicon glyphicon-heart"></span> footer</p>
-        </div>
-    </div>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.2/backbone-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.2/backbone.marionette.min.js"></script>
+        <script>
+        $(function() {
+            app.start();
+            var compiled = _.template($('#item').html());
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="scripts/main.js"></script>
-    <script>
-    // App.initialize();
-    </script>
+            $('.items').append(compiled({
+                heading: 'test',
+                description: 'blahblah'
+            }));
+        })
+        </script>
 </body>
 
 </html>

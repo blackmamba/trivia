@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Diagonal Matrix</title>
+</head>
+<body>
+<h1>Inteview Question</h1>
+<h2>Write code to make the following work</h2>
+
+<pre>
+	
+
+// make this work:
+var person = new Model();
+
+person.on('change', function(attr, value){
+  console.log('Changed!', attr, value);
+});
+
+person.on('change:name', function(attr, value){
+  console.log('Changed name!', value);
+});
+
+person.set('name', 'Hitesh');
+person.set('eyeColor', 'blue');
+person.set('car', undefined);
+
+// should return 'Hitesh blue'
+console.log(person.get('name'), person.get('eyeColor'));
+
+// should return 'true false true'
+console.log(person.has('name'), person.has('fur'), person.has('car'));
+
+person.unset('eyeColor');
+
+// should return '??? false'
+console.log(person.get('eyeColor'), person.has('eyeColor'));
+</pre>
+
+
+<script src="script.js"></script>
+</body>
+</html>
+

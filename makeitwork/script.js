@@ -26,7 +26,7 @@ var Model = function() {
   
 } 
 
-Model.prototype = Event.prototype;
+Model.prototype = Object.create(Event.prototype);
 
 Model.prototype.set = function(key, val) {
   try {

@@ -1,14 +1,18 @@
- function biggest() {
+/*
+write a function to find the largest number
+the function should be able to take any number of arguments
+*/
+function biggest() {
     var slice = Array.prototype.slice;
     var args = slice.apply(arguments);
     var greatest;
     if (args.length ===1) return args[0];
     args.forEach(function(element, index, arr){
-    	if (!greatest) {
+      if (!greatest) {
             greatest = +element;
         } else {
-         	if (greatest < +element) {
-             	greatest = +element;   
+          if (greatest < +element) {
+              greatest = +element;   
             }    
         }    
             
@@ -36,32 +40,32 @@ var rootA;
 var rootB;
 function findClone(Node) { /* ... */ 
     var foundNode;
-	walkTheDom(rootB, function(r ){
-     	return isEqual(r, Node);   
+  walkTheDom(rootB, function(r ){
+      return isEqual(r, Node);   
     }    
 }
 
 function walkTheDom(root, cb) {
- 	if (!root) {
-    	return;
+  if (!root) {
+      return;
     }
     var r = root;   
-	if (cb (r)) {
+  if (cb (r)) {
         foundNode = r;
-    	return;
+      return;
     }    
     r = r.firstChild;
     
     while (r) {
-     	walkTheDom(r);
+      walkTheDom(r);
         r = r.nextSibling;
     }    
-	    
+      
 }    
 
 
 function isEqual (node1, node2) {
- 	//returns true if two nodes are equal else returns false
+  //returns true if two nodes are equal else returns false
 
 }    
     

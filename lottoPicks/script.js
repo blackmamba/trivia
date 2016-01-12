@@ -1,15 +1,26 @@
-var nums = ['1', '42', '100848', '4938532894754', '1234567', '472844278465445', '4938532894747'];
+var nums = ['1', '42', '100848', '4938532894754', '1234567', '472844278465445', '4938532894747', '1203987'];
 
 
-function lottoHelper() {
+var lottoHelper = function() {
     var lottoPicks = [];
     nums.forEach(function(item, index, array) {
         if (item.length < 7) return false;
+        var numArr = item.split('');
         if (item.length === 7) {
-            lottoPicks.push(item.split('').join(' '));
+                var isUnique = true;
+            numArr.some(function(item, index, arr) {
+                if (arr.indexOf(item) !== arr.lastIndexOf(item)) {
+                isUnique = false;
+                return true;
+              }
+            })
+            if (isUnique) {
+                lottoPicks.push(item.split('').join(' '));
+            }
+            
         } 
 
-        var numArr = item.split('');
+        
         var len = numArr.length, num;
         var ticket = [];
         for (var i = 0; i < len; i++) {
@@ -37,6 +48,10 @@ function lottoHelper() {
     });
 
     console.log('*** lottoPicks: ', lottoPicks);
-    return lottoPicks;
+  //   return  lottoPicks.map(function(item){
+  //       return '<li>' + item + '</li>';
+  // }).join('');
 }
 lottoHelper();
+
+// document.getElementById('output').innerHTML = lottoHelper();

@@ -38,8 +38,7 @@ var lottoRecursion = function(myString, num_digits) {
     if (ticket_number > 59 || ticket_number < 1) {
         return [];
     }
-    // Why the fuck does return [ticket number]; not work.
-    // Piece of shit javascript. =(. 
+    
     tmp_array = [];
     tmp_array.push(ticket_number);
     valid_lotto_picks.push(tmp_array);

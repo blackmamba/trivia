@@ -1,0 +1,53 @@
+body, div {
+    margin: 0px;
+    padding: 0px;
+}
+* {
+    box-sizing: border-box;
+}
+/*.clear-fix{
+    content: "";
+    display: table;
+}*/
+.container {
+    width: 400px;
+    margin: 30px auto;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+div > .left {
+    height: 200px;
+}
+
+
+
+div > .right div {
+    height: 100px;
+}
+
+.bordered {
+    border: 1px solid black;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.floated {
+    float: left;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Flickr Search</title>
+    <link rel="shortcut icon" href="https://www.flickr.com/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <div id="flickr">
+            <div id="blue"></div>
+            <div id="pink"></div>
+        </div>
+        <input type="text" id="query" value="bmw san francisco" />
+        <button id="search">Search</button>
+        <hr class="mr" />
+    </header>
+    <aside id="toolbox">
+        <button id="load-more">Load More</button>
+        <button id="load-all">Load All</button>
+        <button id="scroll-to-bottom">Scroll to Bottom</button>
+        <button id="clear">Clear</button>
+        <div class="loading hide">Loading...</div>
+        <div class="loaded-percent">0%</div>
+    </aside>
+    <div id="results"></div>
+    <div id="lightbox" class="hide">
+        <span class="close" id="close">x</span>
+        <div>
+            <img id="frame" src="" />
+            <div class="metadata">
+                <div class="title"></div>
+                <div class="attribution"></div>
+            </div>
+        </div>
+    </div>
+    <!-- ES6 transpiler-->
+    <script type="text/javascript" src="./search.js"></script>
+    <script type="text/javascript">
+    Flickr.Search.init();
+    </script>
+</body>
+
+</html>

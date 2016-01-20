@@ -1,0 +1,173 @@
+ body {
+     background-color: #F3F5f6;
+ }
+ 
+ #flickr {
+     float: left;
+ }
+ 
+ #blue {
+     background-color: #0F66D9;
+     border-radius: 50%;
+     float: left;
+     height: 20px;
+     width: 20px;
+ }
+ 
+ #pink {
+     background-color: #fb1584;
+     border-radius: 50%;
+     float: left;
+     height: 20px;
+     width: 20px;
+ }
+ 
+ .result {
+     float: left;
+     overflow: hidden;
+     margin: 8px;
+     width: 200px;
+     transition: all 0.1s linear;
+     border: 2px solid #333;
+     border-radius: 4px;
+     padding: 10px;
+     background-color: #fff;
+     cursor: pointer;
+ }
+ 
+ /*.result:hover {*/
+     /*box-shadow: 0 6px 5px 2px rgba(0, 0, 0, 0.3);
+     transform: translateY(-2px);*/
+ /*}*/
+ 
+ .result img {
+     width: 200px;
+     height: 200px;
+     padding-bottom: 10px;
+ }
+ 
+ .metadata {
+     padding: 2px;
+ }
+ 
+ .result .metadata .title {
+     font-weight: 400;
+     width: 200px;
+     height: 16px;
+     font-size: 14px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     color: #000;
+ }
+ 
+ .result .metadata .attribution {
+     font-style: italic;
+     color: #666;
+     width: 200px;
+     height: 12px;
+     font-size: 10px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+ 
+ #toolbox {
+     position: fixed;
+     top: 0;
+     right: 0;
+     width: 140px;
+     background-color: #fff;
+     padding: 10px;
+     border-radius: 0 0 0 10px;
+     opacity: 0.9;
+     z-index: 20;
+ }
+ 
+ #load-more,
+ #load-all,
+ #clear,
+ #scroll-to-bottom {
+     width: 100%;
+     min-height: 40px;
+     font-family: monospace;
+     font-size: 20px;
+ }
+ 
+ .loading {
+     padding-top: 8px;
+     color: #fb1584;
+     text-align: center;
+     font-family: monospace;
+ }
+ 
+ .loading.hide {
+     display: none;
+ }
+ .loaded-percent {
+     padding-top: 8px;
+     font-size: 40px;
+     text-align: center;
+     font-family: monospace;
+ }
+ 
+ .hr {
+     margin-right: 150px;
+     height: 1px;
+ }
+.hide {
+    display: none;
+}
+ #lightbox {
+    top:0;
+    left:0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: black;
+ }
+ #lightbox > span.close {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right:10px;
+    top: 10px;
+    color:white;
+    cursor: pointer;
+    font-size:20px;
+ }
+
+ #lightbox > div {
+    position: absolute;
+    left: 50%;
+    top:50%;
+    width: 500px;
+    height: 500px;
+    margin-left: -250px;
+    margin-top:-320px;
+    z-index: 10000;
+    background-color: white;
+    border-radius: 20px;
+    padding:10px;
+ }
+
+#lightbox > div >img {
+    max-width: 500px;
+    max-height:500px;
+    height: auto;
+}
+
+ #lightbox .title {
+    font-size: 20px;
+    font-weight: bold;
+    color: grey;
+    padding: 5px;
+ }
+
+ #lightbox .attribution {
+    font-size: 16px;
+    color: black;
+    padding: 5px;
+ }

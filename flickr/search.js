@@ -122,6 +122,7 @@
                     totalPages = results.photos && results.photos.pages;
                     // console.log(results);
                     var length = (results && results.photos && results.photos.photo && results.photos.photo.length) || 0;
+                    var images = [];
                     // var fragment = document.createDocumentFragment();
                     for (var n = 0; n < length; n++) {
                         // var templateHolder = document.createElement('div');
@@ -134,6 +135,7 @@
 
                         if (photoSizeUrl) {
                             // fragment.appendChild(this.templateItem(results.photos.photo[n]));
+                            images.push(results.photos.photo[n]);
                             photoCache.push(results.photos.photo[n]);
                         }
 
@@ -150,7 +152,7 @@
                     totalImages = parseInt(results.photos.total, 10);
 
                     document.getElementsByClassName('loaded-percent')[0].innerHTML = parseInt((photoCache.length / totalImages) * 100, 10) + '%';
-                    this.throttleImageLoad(photoCache, 6, this.preloadImage).then(function() {
+                    this.throttleImageLoad(images, 6, this.preloadImage).then(function() {
                         resolve();
                     });
                 }.bind(this));
@@ -276,13 +278,13 @@
                         resolve();
                         return;
                     }
-                    image.onload = function(event) {
-                        if (event.type === 'load') {
-                            document.querySelectorAll('[data-photoid="' + imgMap.id + '"]')[0].querySelectorAll('img')[0].setAttribute('src', url);
-                            resolve();
-                        }
+                    image.onload =  function(event) {
+                            if (event.type === 'load') {
+                                document.querySelectorAll('[data-photoid="' + imgMap.id + '"]')[0].querySelectorAll('img')[0].setAttribute('src', url);
+                                resolve();
+                            }
 
-                    };
+                        }
 
                     image.onerror = function(e) {
                         // reject();

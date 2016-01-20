@@ -143,20 +143,18 @@
     position: absolute;
     left: 50%;
     top:50%;
-    width: 500px;
-    height: 500px;
+    max-width: 500px;
+    /*height: 500px;*/
     margin-left: -250px;
     margin-top:-320px;
     z-index: 10000;
     background-color: white;
-    border-radius: 20px;
     padding:10px;
  }
 
 #lightbox > div >img {
     max-width: 500px;
     max-height:500px;
-    height: auto;
 }
 
  #lightbox .title {

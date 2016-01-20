@@ -68,7 +68,7 @@
 
                 xhr.open('GET', newSearchURL, true);
                 xhr.onreadystatechange = function() {
-
+                    // var promise = new Promise();
                     if (xhr.readyState !== 4 || xhr.status !== 200) {
                         return;
                     }
@@ -91,15 +91,11 @@
                         // templateHolder.addEventListener('click', that.goToImage);
 
                         photoCache.push(results.photos.photo[n]);
-                        // images.push({
-                        //     id: results.photos.photo[n].id,
-                        //     url: photoSizeUrl
-                        // });
                         // that.preloadImage(results.photos.photo[n].id, photoSizeUrl);
                     }
 
                     that.ui.results.appendChild(fragment);
-                    that.preloadImage(photoCache);
+                    that.throttleImageLoad(photoCache, 8, that.preloadImage);
 
 
                     var loadingElement = document.getElementsByClassName('loading')[0];
@@ -174,21 +170,55 @@
                 lightbox.getElementsByClassName('title')[0].innerHTML = clickedElement.getElementsByClassName('title')[0].textContent;
                 lightbox.getElementsByClassName('attribution')[0].innerHTML = clickedElement.getElementsByClassName('attribution')[0].textContent;
                 lightbox.className = '';
-                
+
             },
 
-            preloadImage: function(images) {
+            throttleImageLoad: function(images, maxConcurrency, cb) {
+                if (!images || images.length === 0) {
 
+                    //base case
+                    return;
+                }
+                this.max = maxConcurrency || 8;
+                this.count = 0;
+                this.cb = cb;
+                this.images = images;
+                var promises = [];
+                while (this.count < maxConcurrency) {
+                    promises.push(cb.call(this, images[this.count]));
+                    this.count += 1;
+                }
+                Promise.all(promises).then(function() {
+                    this.throttleImageLoad.call(this, this.images.slice(maxConcurrency), this.max, this.cb)
+                }.bind(this));
+                // .catch (function(err) {
+                //     // catch any error that happened so far
+                //     // display error
+                //     console.log('error occured while loading');
+                // });
 
-                images.forEach(function(imgMap) {
+            },
+
+            preloadImage: function(imgMap) {
+                return promise = new Promise(function(resolve, reject) {
                     var image = new Image(),
-                    url = imgMap.url_l || imgMap.url_c || imgMap.url_z;
-
-                    image.onload = (function(event) {
+                        url = imgMap.url_l || imgMap.url_c || imgMap.url_z;
+                        if (!url) {
+                            resolve();
+                            return;
+                        }
+                    image.onload = function(event) {
                         if (event.type === 'load') {
                             document.querySelectorAll('[data-photoid="' + imgMap.id + '"]')[0].querySelectorAll('img')[0].setAttribute('src', url);
+                            resolve();
                         }
-                    });
+
+                    };
+
+                    image.onerror = function(e) {
+                        // reject();
+                    };
+
 
                     image.src = url;
                     preloadedImages.push(image);
@@ -209,7 +239,7 @@
             },
 
             destroy: function() {
-                //remove events
+                //detach events
             }
 
         };
@@ -217,4 +247,3 @@
     Flickr.Search = Search;
     return Search;
 }(window));
-

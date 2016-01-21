@@ -118,10 +118,18 @@
 
             handleResponse: function(results) {
                 return new Promise(function(resolve, reject) {
-                    if (!results) return;
+                    if (!results) {
+                        reject();
+                    }    
                     totalPages = results.photos && results.photos.pages;
                     // console.log(results);
                     var length = (results && results.photos && results.photos.photo && results.photos.photo.length) || 0;
+                    if (length === 0) {
+                        //sometimes api don't return any results, which is a bug on their side, so just keep moving
+                        resolve();
+                        return;
+
+                    }
                     var images = [];
                     // var fragment = document.createDocumentFragment();
                     for (var n = 0; n < length; n++) {

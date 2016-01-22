@@ -1,10 +1,12 @@
-var nums = ['1', '42', '100848', '4938532894754', '1234567', '472844278465445', '4938532894747', '1203987'];
+var nums = ['1', '42', '100848', '4938532894754', '1234567', '472844278465445', '4938532894747', '1203987', '5698157156'];
 
 
 var lottoHelper = function() {
     var lottoPicks = [];
     nums.forEach(function(item, index, array) {
         if (item.length < 7) return false;
+        //taking care of the zero case
+        if (item.length === 7 && item.indexOf(0) !== -1) return false;
         var numArr = item.split('');
         if (item.length === 7) {
                 var isUnique = true;
@@ -13,7 +15,7 @@ var lottoHelper = function() {
                 isUnique = false;
                 return true;
               }
-            })
+            });
             if (isUnique) {
                 lottoPicks.push(item.split('').join(' '));
             }
@@ -25,7 +27,7 @@ var lottoHelper = function() {
         var ticket = [];
         for (var i = 0; i < len; i++) {
             num = parseInt(numArr[i]);
-            if (num <= 5 && i < (numArr.length - 1)) {
+            if (num > 0 && num <= 5 && i < (numArr.length - 1)) {
                 num *= 10;
                 num += parseInt(numArr[i + 1]);
                 i += 1;
@@ -48,10 +50,8 @@ var lottoHelper = function() {
     });
 
     console.log('*** lottoPicks: ', lottoPicks);
-  //   return  lottoPicks.map(function(item){
-  //       return '<li>' + item + '</li>';
-  // }).join('');
+    return  lottoPicks.map(function(item){
+        return '<li>' + item + '</li>';
+  }).join('');
 }
-lottoHelper();
-
-// document.getElementById('output').innerHTML = lottoHelper();
+document.getElementById('output').innerHTML = lottoHelper();
